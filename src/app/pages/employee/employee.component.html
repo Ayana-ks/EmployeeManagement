@@ -1,0 +1,149 @@
+
+            <div class="row">
+                <div [class]="isSidePanelOpen() ? 'col-7' : 'col-12'">
+                    <div class="card">
+                        <div class="card-header bg-secondary">
+                            <div class="row">
+                                <div class="col-6 text-white">
+                                    <strong>Employee Portal</strong> 
+                                </div>
+                                <div class="col-6 text-end">
+                                    <button class="btn btn-warning" (click)="addNew()">Add New</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No</th>
+                                        <th>Name</th>
+                                        <th>Contact No</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+        
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (item of employeesList; track $index) 
+                                    {
+                                        <tr>
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.employeeName}}</td>
+                                            <td>{{item.contactNo}}</td>
+                                            <td>{{item.emailId}}</td>
+                                            <td>{{item.deptId}}</td>
+                                            <td>
+                                                <button class="btn btn-success" (click)="onEdit(item)">Edit</button>
+                                                
+                                                <button class="btn btn-danger" (click)="onDelete(item.employeeId!)">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <!-- Data rows go here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @if(isSidePanelOpen()){
+                    <div class="col-5">
+                        <div class="card">
+                            <div class="card-header bg-secondary">
+                                <div class="row">
+                                    <div class="col-6 text-white">
+                                        <strong>New Employee</strong> 
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="btn btn-primary" (click)="close()">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="mb-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="employeeName" class="form-label">Employee Name</label>
+                                            <input type="text" class="form-control" id="employeeName" placeholder="Enter employee name" [(ngModel)]="employeeObj.employeeName" name="employeeName">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="contactNo" class="form-label">Contact No</label>
+                                            <input type="text" class="form-control" id="contactNo" placeholder="Enter contact number" [(ngModel)]="employeeObj.contactNo" name="contactNo">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="emailId" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="emailId" placeholder="Enter email" [(ngModel)]="employeeObj.emailId" name="emailId">
+                                        </div>
+    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="deptId" class="form-label">Parent Department</label>
+                                            <select id="deptId" class="form-select" [(ngModel)]="employeeObj.deptId" name="deptid" (change)="onDeptChange()">
+                                                <option selected>Select Department</option>
+                                                @for (item of parentDeptList; track $index) {
+                                                    <option [value]="item.departmentId">{{item.departmentName}}</option>
+                                            
+                                                }
+                    
+                                            </select>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                            <label for="deptId" class="form-label">Child Department</label>
+                                            <select id="deptId" class="form-select" name="childdeptId" [(ngModel)]="employeeObj.childdeptId">
+                                                <option selected>Select Department </option>
+                                                @for (item of childDeptList; track $index) {
+                                                    <option [value]="item.childDeptId">{{item.departmentName}}</option>
+                                            
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" placeholder="Enter password" [(ngModel)]="employeeObj.password" name="password">
+                                        </div>
+                                      <!--  <div class="col-md-6">
+                                            <label for="role" class="form-label">Role</label>
+                                            <input type="text" class="form-control" id="role" placeholder="Enter role">
+                                        </div>-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div>
+                                                Select Gender
+                                            </div>
+                                        
+                                            <input type="radio" value="Male" [(ngModel)]="employeeObj.gender" name="gender"/>Male
+                                            <input type="radio" value="Female" [(ngModel)]="employeeObj.gender" name="gender"/>Female
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                    @if (employeeObj.employeeId==0){
+                                        <button type="submit" class="btn btn-warning mt-3" (click)="onSaveEmployee()">Submit</button>
+                                    }@else {
+                                        <button type="submit" class="btn btn-primary mt-3" (click)="onUpdateEmp()">Update</button>
+                                    }
+                                    
+            
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+            </div>
+         
+           
+
+          
+
+
+
